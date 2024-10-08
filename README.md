@@ -1,6 +1,6 @@
 ## Telegram Mini App Auth
 
-[Telegram Mini Apps Doc](https://core.telegram.org/bots/webapps#validating-data-received-via-the-mini-app)
+[Telegram Mini Apps Official Documentation](https://core.telegram.org/bots/webapps#validating-data-received-via-the-mini-app)
 
 
 ## Install
@@ -84,7 +84,7 @@ example:
 ```javascript
         fetch('endpoint-url', {
             headers: {
-                'Authorization': "Tma " + window.Telegram.WebApp.initData
+                'Authorization': `TMA ${window.Telegram.WebApp.initData}`
             }
         })
 ```
