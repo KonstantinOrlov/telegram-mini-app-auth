@@ -17,7 +17,7 @@
         <PackageId>Telegram.MiniApp.Auth</PackageId>
         <Description>This NuGet package provides extensions for ASP.NET Core apps for authentication in Telegram Mini App</Description>
         <PackageProjectUrl>https://github.com/KonstantinOrlov/Telegram.MiniApp.Authentication</PackageProjectUrl>
-        <PackageIcon>tma.ico</PackageIcon>
+        <PackageIcon>tma.png</PackageIcon>
     </PropertyGroup>
 
    
@@ -36,10 +36,10 @@
 
     <ItemGroup>
       <None Remove="TestWebApi\**" />
-      <None Include="..\..\tma.ico">
+      <None Include="..\..\tma.png">
         <Pack>True</Pack>
         <PackagePath></PackagePath>
-        <Link>tma.ico</Link>
+        <Link>tma.png</Link>
       </None>
     </ItemGroup>
     <ItemGroup>
