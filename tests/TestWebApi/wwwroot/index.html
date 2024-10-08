@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .Main {
+            width: 100%;
+            padding: 25px;
+            text-align: center;
+
+        }
+
+        h1 {
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+
+        img {
+            width: 70px;
+            margin: 30px auto;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 5px;
+            margin-top: 50px;
+            height: 60px;
+            width: 200px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        form {
+            display: none;
+            text-align: center;
+        }
+
+        input {
+            outline: none;
+            border-radius: 5px;
+            border: 2px solid #535353;
+            padding: 15px 10px;
+            margin: 10px 0 0;
+            transition: all .2s;
+        }
+
+    </style>
+</head>
+<body>
+<div class="Main">
+    <h1>Тестовое приложение</h1>
+    <p></p>
+    <button class="btn f-btn">Тест авторизации</button>
+
+    <p></p>
+    <br/><br/>
+    <div id="UserId"></div>
+    <div id="UserName"></div>
+    <div id="FirstName"></div>
+    <div id="LastName"></div>
+    <div id="ChatInstance"></div>
+    <p></p>
+    <br/><br/>
+    <button class="btn p-btn">Тест премиум</button>
+</div>
+
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<script>
+    let tg = window.Telegram.WebApp;
+    let fBtn = document.getElementsByClassName("f-btn")[0];
+    let pBtn = document.getElementsByClassName("p-btn")[0];
+    let defaultInitData = "Tma user={\"id\":111111111,\"first_name\":\"test\",\"last_name\":\"test\",\"username\":\"test\",\"language_code\":\"ru\",\"allows_write_to_pm\":true}&chat_instance=-8800555353566677788&chat_type=sender&auth_date=1727941081&hash=75a6a7dcbaa17c45db55182280178244a7de36acaab8a748e92938ab5886831a";
+
+    pBtn.addEventListener("click", () => {
+
+        let initData = tg.initData;
+
+        fetch('http://localhost:5153/api/home/premium', {
+            headers: {
+                'Authorization':initData == null  || initData == undefined || initData.length == 0?
+                    defaultInitData
+                    : initData
+            }
+        })
+            .then(response => response.text())
+            .then(text => {
+                console.log("from backend: " + text);
+            });
+    });
+
+    fBtn.addEventListener("click", () => {
+
+        let initData = tg.initData;
+
+        fetch('http://localhost:5153/api/home', {
+            headers: {
+                'Authorization':initData == null  || initData == undefined || initData.length == 0?
+                    defaultInitData
+                    : initData
+            }
+        })
+            .then(response => response.text())
+            .then(text => {
+                console.log("from backend: " + text);
+                let response = JSON.parse(text);
+                console.log(response);
+
+                document.getElementById('UserId').innerHTML = "UserId= " + response.userId;
+                document.getElementById('UserName').innerHTML = "UserName= " + response.userName;
+                document.getElementById('FirstName').innerHTML = "FirstName= " + response.firstName;
+                document.getElementById('LastName').innerHTML = "LastName= " + response.lastName;
+                document.getElementById('ChatInstance').innerHTML = "ChatInstance= " + response.chatInstance;
+            });
+
+
+    });
+
+    function PrintData()
+    {
+        var div = document.getElementById('divID');
+
+        div.innerHTML += 'Extra stuff';
+    }
+
+</script>
+</body>
+</html>
