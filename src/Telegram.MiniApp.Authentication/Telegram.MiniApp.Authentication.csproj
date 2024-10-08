@@ -41,6 +41,11 @@
         <PackagePath></PackagePath>
         <Link>tma.png</Link>
       </None>
+      <None Include="..\..\tma.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>tma.png</Link>
+      </None>
     </ItemGroup>
     <ItemGroup>
         <None Include="..\..\README.MD">
