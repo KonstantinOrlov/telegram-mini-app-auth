@@ -27,10 +27,9 @@ public static class ClaimExtensions
 		var claims = user.Identities
 			.FirstOrDefault(x => x.AuthenticationType == TmaDefaults.AuthenticationScheme)?
 			.Claims
-			.Select(x => new KeyValuePair<string, string>(x.Type, x.Value))
-			.ToDictionary();
+			.ToDictionary(k => k.Type, v => v.Value);
 
-		if (claims is null or {Count:0}) return false;
+		if (claims is null || claims.Any() is false) return false;
 
 		result = new TmaUserPrincipals()
 		{

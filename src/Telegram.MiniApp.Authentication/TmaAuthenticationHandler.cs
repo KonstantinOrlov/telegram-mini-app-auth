@@ -17,10 +17,16 @@ namespace Neftm.TelegramMiniApp.Authorization;
 /// </summary>
 public class TmaAuthenticationHandler : AuthenticationHandler<TmaAuthenticationOptions>
 {
+#if NET8_0
+	public TmaAuthenticationHandler(
+		IOptionsMonitor<TmaAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder) :
+		base(options, logger, encoder) { }
+#elif NET6_0_OR_GREATER
 	public TmaAuthenticationHandler(
 		IOptionsMonitor<TmaAuthenticationOptions> options, ILoggerFactory logger, UrlEncoder encoder,
 		ISystemClock clock) :
 		base(options, logger, encoder, clock) { }
+#endif
 
 	/// <summary>
 	/// Handles authentication
