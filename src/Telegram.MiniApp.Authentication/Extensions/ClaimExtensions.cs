@@ -29,7 +29,7 @@ public static class ClaimExtensions
 			.Claims
 			.ToDictionary(k => k.Type, v => v.Value);
 
-		if (claims is null || claims.Any() is false) return false;
+		if (claims is null || claims.Count == 0) return false;
 
 		result = new TmaUserPrincipals()
 		{
