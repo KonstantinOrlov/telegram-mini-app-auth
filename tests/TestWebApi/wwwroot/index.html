@@ -62,6 +62,7 @@
 
     <p></p>
     <br/><br/>
+    <div id="IsAuthorize"></div>
     <div id="UserId"></div>
     <div id="UserName"></div>
     <div id="FirstName"></div>
@@ -109,7 +110,18 @@
                     : initData
             }
         })
-            .then(response => response.text())
+            .then(response =>
+            {
+                if(response.ok)
+                {
+                    document.getElementById('IsAuthorize').innerHTML = "authorization successful";
+                }
+                else
+                {
+                    document.getElementById('IsAuthorize').innerHTML = "authorization failed";
+                }
+                return response.text();
+            })
             .then(text => {
                 console.log("from backend: " + text);
                 let response = JSON.parse(text);

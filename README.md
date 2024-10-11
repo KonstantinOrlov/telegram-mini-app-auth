@@ -19,11 +19,10 @@ dotnet add package Telegram.MiniApp.Authentication
 
 - Add Authentication:
 ```csharp
-builder.Services.AddAuthentication(TmaDefaults.AuthenticationScheme)
-	.AddTelegramMiniAppInHeader(TmaDefaults.AuthenticationScheme, options =>
-	{
-		options.BotToken = builder.Configuration.GetValue<string>("BotToken")!;
-	});
+builder.Services.AddTelegramMiniAppInHeader(options =>
+{
+	options.BotToken = builder.Configuration.GetValue<string>("BotToken")!;
+});
 ```
 
 - Add Authorization:

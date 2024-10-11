@@ -79,7 +79,7 @@ public class TmaAuthenticationHandler : AuthenticationHandler<TmaAuthenticationO
 	{
 		return new TmaInitData()
 		{
-			TmaInitDataUser = JsonSerializer.Deserialize<TmaInitDataUser>(input["user"] ?? string.Empty),
+			TmaInitDataUser = string.IsNullOrWhiteSpace(input["user"]) ? null : JsonSerializer.Deserialize<TmaInitDataUser>(input["user"]),
 			ChatInstance = input["chat_instance"] ?? string.Empty,
 			ChatType = input["chat_type"] ?? string.Empty,
 			AuthDate = long.TryParse(input["auth_date"], out var parseResult) ? DateTimeOffset.FromUnixTimeSeconds(parseResult) : null,

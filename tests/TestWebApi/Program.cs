@@ -52,11 +52,10 @@ builder.Services.AddAuthorization(options =>
 	options.AddTmaPremiumPolicy();
 });
 
-builder.Services.AddAuthentication(TmaDefaults.AuthenticationScheme)
-	.AddTelegramMiniAppInHeader(TmaDefaults.AuthenticationScheme, options =>
-	{
-		options.BotToken = builder.Configuration.GetValue<string>("BotToken")!;
-	});
+builder.Services.AddTelegramMiniAppInHeader(options =>
+{
+	options.BotToken = builder.Configuration.GetValue<string>("BotToken")!;
+});
 
 var app = builder.Build();
 
