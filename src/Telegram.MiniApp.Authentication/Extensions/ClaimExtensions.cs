@@ -56,15 +56,15 @@ public static class ClaimExtensions
 	/// </remarks>
 	public static bool TryGetTmaInitData(this HttpContext context, out TmaInitData? result)
 	{
-		try
+		result = null;
+		var feature = context.Features.Get<TmaInitData>();
+
+		if (feature is not null)
 		{
-			result = context.Features.Get<TmaInitData>();
+			result = feature;
 			return true;
 		}
-		catch (InvalidOperationException e)
-		{
-			result = null;
-			return false;
-		}
+
+		return false;
 	}
 }
