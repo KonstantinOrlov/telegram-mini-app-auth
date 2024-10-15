@@ -51,7 +51,7 @@ builder.Services.AddTelegramMiniAppInHeader(options =>
   });
 ```
 
-After successful authorization, records the following data in the Claims:
+After successful authorization, records the following data in the Claims(if not null):
 - **tma_user_id** - A unique identifier for the telegram user.
 - **tma_username** - Username of the telegram user.
 - **tma_first_name** - First name of the telegram user.
@@ -62,13 +62,13 @@ After successful authorization, records the following data in the Claims:
 You can get claims in the usual way, or use extension methods provided by the library:
 ```csharp
 
-// Get all TMA claims as TmaInitData
+// Get TMA claims as TmaUserPrincipals
 if (HttpContext.User.TryGetTmaUser(out var tmaUser))
 {
     //Using
 }
 
-// Get all initData as TmaUserPrincipals
+// Get all initData as TmaInitData
 if (HttpContext.TryGetTmaInitData(out var initData))
 {
     //Using
