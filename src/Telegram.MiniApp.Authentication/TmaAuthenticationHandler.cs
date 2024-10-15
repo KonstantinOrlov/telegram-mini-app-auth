@@ -49,8 +49,7 @@ public class TmaAuthenticationHandler : AuthenticationHandler<TmaAuthenticationO
 
 		//validate initData
 		if (string.IsNullOrWhiteSpace(initData.Hash)
-		    || string.IsNullOrWhiteSpace(initData.ChatInstance)
-		    || initData.TmaInitDataUser is null
+            || (initData.AuthDate.HasValue is false)
 		    || HashHelper.CalculateTmaHash(BuildDataCheckString(data), Options.BotToken) != initData.Hash)
 		{
 			return Task.FromResult(AuthenticateResult.Fail($"Invalid token"));
