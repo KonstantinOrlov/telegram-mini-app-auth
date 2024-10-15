@@ -45,28 +45,18 @@ public class TmaAuthenticationHandler : AuthenticationHandler<TmaAuthenticationO
 		token = token.Remove(0, TmaDefaults.TokenPrefix.Length);
 		
 		var data = HttpUtility.ParseQueryString(token);
-		var initData = ParseToken(data);
 
 		//validate initData
-		if (string.IsNullOrWhiteSpace(initData.Hash)
-            || (initData.AuthDate.HasValue is false)
-		    || HashHelper.CalculateTmaHash(BuildDataCheckString(data), Options.BotToken) != initData.Hash)
+		if (string.IsNullOrWhiteSpace(data[TmaInitDataKeys.Hash])
+		    || (string.IsNullOrWhiteSpace(data[TmaInitDataKeys.AuthDate]))
+		    || HashHelper.CalculateTmaHash(BuildDataCheckString(data), Options.BotToken) != data[TmaInitDataKeys.Hash])
 		{
 			return Task.FromResult(AuthenticateResult.Fail($"Invalid token"));
 		}
 
 		// Set feature & claims
-		Request.HttpContext.Features.Set(initData);
-
-		var claims = new List<Claim>()
-		{
-			new(TmaClaimTypes.UserId, initData.TmaInitDataUser.Id.ToString()),
-			new(TmaClaimTypes.UserName, initData.TmaInitDataUser.UserName),
-			new(TmaClaimTypes.FirstName, initData.TmaInitDataUser.FirstName),
-			new(TmaClaimTypes.LastName, initData.TmaInitDataUser.LastName),
-			new(TmaClaimTypes.ChatInstance, initData.ChatInstance),
-			new(TmaClaimTypes.IsPremium, initData.TmaInitDataUser.IsPremium.ToString()),
-		};
+		Request.HttpContext.Features.Set(data);
+		var claims = BuildClaims(data);
 
 		var claimsIdentity = new ClaimsIdentity(claims, Scheme.Name);
 		var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -74,24 +64,43 @@ public class TmaAuthenticationHandler : AuthenticationHandler<TmaAuthenticationO
 		return Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(claimsPrincipal, Scheme.Name)));
 	}
 
-	private TmaInitData ParseToken(NameValueCollection input)
-	{
-		return new TmaInitData()
-		{
-			TmaInitDataUser = string.IsNullOrWhiteSpace(input["user"]) ? null : JsonSerializer.Deserialize<TmaInitDataUser>(input["user"]),
-			ChatInstance = input["chat_instance"] ?? string.Empty,
-			ChatType = input["chat_type"] ?? string.Empty,
-			AuthDate = long.TryParse(input["auth_date"], out var parseResult) ? DateTimeOffset.FromUnixTimeSeconds(parseResult) : null,
-			Hash = input["hash"] ?? string.Empty,
-		};
-	}
-	
 	private string BuildDataCheckString(NameValueCollection input)
 	{
 		return string.Join("\n",
 			input.AllKeys
-				.Where(d => d != "hash")
+				.Where(d => d != TmaInitDataKeys.Hash)
 				.OrderBy(x => x)
 				.Select(x => $"{x}={input[x]}"));
+	}
+
+	private List<Claim> BuildClaims(NameValueCollection data)
+	{
+		var claims = new List<Claim>();
+
+		if (string.IsNullOrWhiteSpace(data[TmaInitDataKeys.User]) is false)
+		{
+			var user = JsonSerializer.Deserialize<TmaInitDataUser>(data[TmaInitDataKeys.User]);
+
+			claims.AddRange(new List<Claim>()
+			{
+				new(TmaClaimTypes.UserId, user.Id.ToString()),
+				new(TmaClaimTypes.FirstName, user.FirstName),
+				new(TmaClaimTypes.IsPremium, user.IsPremium.ToString()),
+			});
+
+			//Possible empty
+			if (string.IsNullOrWhiteSpace(user.UserName) is false)
+				claims.Add(new Claim(TmaClaimTypes.UserName, user.UserName));
+			
+			if (string.IsNullOrWhiteSpace(user.LastName) is false)
+				claims.Add(new Claim(TmaClaimTypes.LastName, user.LastName));
+		}
+
+		if (string.IsNullOrWhiteSpace(data[TmaInitDataKeys.ChatInstance]) is false)
+		{
+			claims.Add(new Claim(TmaClaimTypes.ChatInstance, data[TmaInitDataKeys.ChatInstance]));
+		}
+
+		return claims;
 	}
 }

@@ -1,4 +1,6 @@
+using System.Collections.Specialized;
 using System.Security.Claims;
+using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Neftm.TelegramMiniApp.Authorization.Constants;
@@ -57,14 +59,45 @@ public static class ClaimExtensions
 	public static bool TryGetTmaInitData(this HttpContext context, out TmaInitData? result)
 	{
 		result = null;
-		var feature = context.Features.Get<TmaInitData>();
+		var feature = context.Features.Get<NameValueCollection>();
 
-		if (feature is not null)
+		if (feature is null || feature.AllKeys.Length == 0) return false;
+
+		try
 		{
-			result = feature;
+			result = ParseInitData(feature);
 			return true;
 		}
+		catch
+		{
+			return false;
+		}
+	}
 
-		return false;
+	private static TmaInitData ParseInitData(NameValueCollection input)
+	{
+		return new TmaInitData()
+		{
+			QueryId = input[TmaInitDataKeys.QueryId] ?? string.Empty,
+			TmaInitDataUser = string.IsNullOrWhiteSpace(input[TmaInitDataKeys.User])
+				? null
+				: JsonSerializer.Deserialize<TmaInitDataUser>(input[TmaInitDataKeys.User]),
+			TmaInitDataReceiver = string.IsNullOrWhiteSpace(input[TmaInitDataKeys.Receiver])
+				? null
+				: JsonSerializer.Deserialize<TmaInitDataUser>(input[TmaInitDataKeys.Receiver]),
+			Chat = string.IsNullOrWhiteSpace(input[TmaInitDataKeys.Chat])
+				? null
+				: JsonSerializer.Deserialize<TmaInitDataChat>(input[TmaInitDataKeys.Chat]),
+			ChatType = input[TmaInitDataKeys.ChatType] ?? string.Empty,
+			ChatInstance = input[TmaInitDataKeys.ChatInstance] ?? string.Empty,
+			StartParam = input[TmaInitDataKeys.StartParam] ?? string.Empty,
+			CanSendAfter = string.IsNullOrWhiteSpace(input[TmaInitDataKeys.CanSendAfter])
+				? null
+				: DateTimeOffset.FromUnixTimeSeconds(long.Parse(input[TmaInitDataKeys.CanSendAfter])),
+			AuthDate = string.IsNullOrWhiteSpace(input[TmaInitDataKeys.AuthDate])
+				? null
+				: DateTimeOffset.FromUnixTimeSeconds(long.Parse(input[TmaInitDataKeys.AuthDate])),
+			Hash = input["hash"] ?? string.Empty,
+		};
 	}
 }
