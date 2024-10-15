@@ -36,10 +36,10 @@ public static class ClaimExtensions
 		result = new TmaUserPrincipals()
 		{
 			UserId = int.TryParse(claims.GetValueOrDefault(TmaClaimTypes.UserId), out var userId) ? userId : default,
-			UserName = claims.GetValueOrDefault(TmaClaimTypes.UserName),
-			FirstName = claims.GetValueOrDefault(TmaClaimTypes.FirstName),
-			LastName = claims.GetValueOrDefault(TmaClaimTypes.LastName),
-			ChatInstance = claims.GetValueOrDefault(TmaClaimTypes.ChatInstance),
+			UserName = claims.GetValueOrDefault(TmaClaimTypes.UserName, string.Empty),
+			FirstName = claims.GetValueOrDefault(TmaClaimTypes.FirstName, string.Empty),
+			LastName = claims.GetValueOrDefault(TmaClaimTypes.LastName, string.Empty),
+			ChatInstance = claims.GetValueOrDefault(TmaClaimTypes.ChatInstance, string.Empty),
 			IsPremium = bool.TryParse(claims.GetValueOrDefault(TmaClaimTypes.IsPremium), out var isPremium) ? isPremium : default,
 		};
 
