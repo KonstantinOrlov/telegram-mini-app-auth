@@ -27,8 +27,7 @@ builder.Services.AddTelegramMiniAppInHeader(options =>
 
 - Add Authorization:
 ```csharp
-// Library provides default policy:
-
+  // Library provides default policy:
   builder.Services.AddAuthorization(options =>
   {
       // Simple TMA Policy. Only checks tma_user_id claims
@@ -39,8 +38,7 @@ builder.Services.AddTelegramMiniAppInHeader(options =>
   });
 
 
-// Or you can customize the policy the way you want:
-
+  // Or you can customize the policy the way you want:
   builder.Services.AddAuthorization(options =>
   {
       options.AddPolicy("MyPolicy", policy =>
