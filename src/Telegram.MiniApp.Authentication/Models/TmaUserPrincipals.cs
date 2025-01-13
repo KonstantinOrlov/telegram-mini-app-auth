@@ -8,7 +8,7 @@ public class TmaUserPrincipals
 	/// <summary>
 	/// Unique identifier for the user or bot
 	/// </summary>
-	public int UserId { get; init; }
+	public long UserId { get; init; }
 	
 	/// <summary>
 	/// Username of the user or bot.

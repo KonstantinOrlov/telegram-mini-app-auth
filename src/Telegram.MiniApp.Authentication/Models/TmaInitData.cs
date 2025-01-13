@@ -63,7 +63,7 @@ public class TmaInitDataUser
 	/// <summary>
 	/// A unique identifier for the user or bot.
 	/// </summary>
-	[JsonPropertyName("id")] public int Id { get; init; }
+	[JsonPropertyName("id")] public long Id { get; init; }
 	
 	/// <summary>
 	/// True, if this user is a bot.
@@ -116,7 +116,7 @@ public class TmaInitDataChat
 	/// <summary>
 	/// Unique identifier for this chat.
 	/// </summary>
-	[JsonPropertyName("id")] public int Id { get; init; }
+	[JsonPropertyName("id")] public long Id { get; init; }
 
 	/// <summary>
 	/// Type of chat.

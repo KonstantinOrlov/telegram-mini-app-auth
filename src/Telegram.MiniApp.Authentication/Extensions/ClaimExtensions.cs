@@ -35,7 +35,7 @@ public static class ClaimExtensions
 
 		result = new TmaUserPrincipals()
 		{
-			UserId = int.TryParse(claims.GetValueOrDefault(TmaClaimTypes.UserId), out var userId) ? userId : default,
+			UserId = long.TryParse(claims.GetValueOrDefault(TmaClaimTypes.UserId), out var userId) ? userId : default,
 			UserName = claims.GetValueOrDefault(TmaClaimTypes.UserName, string.Empty),
 			FirstName = claims.GetValueOrDefault(TmaClaimTypes.FirstName, string.Empty),
 			LastName = claims.GetValueOrDefault(TmaClaimTypes.LastName, string.Empty),
