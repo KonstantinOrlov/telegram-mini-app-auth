@@ -12,12 +12,14 @@
         <RepositoryUrl>https://github.com/KonstantinOrlov/telegram-mini-app-auth</RepositoryUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageTags>TMA, Telegram Mini App Authentication</PackageTags>
-        <Version>1.1.5</Version>
+        <Version>1.2.0</Version>
         <PackageId>Telegram.MiniApp.Auth</PackageId>
         <Description>This NuGet package provides extensions for ASP.NET Core apps for authentication in Telegram Mini App</Description>
         <PackageProjectUrl></PackageProjectUrl>
         <PackageIcon>tma.png</PackageIcon>
         <TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
+        <AssemblyVersion>1.2.0</AssemblyVersion>
+        <FileVersion>1.2.0</FileVersion>
     </PropertyGroup>
 
    
