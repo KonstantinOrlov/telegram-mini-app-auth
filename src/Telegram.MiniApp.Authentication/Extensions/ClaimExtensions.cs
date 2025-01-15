@@ -81,23 +81,24 @@ public static class ClaimExtensions
 			QueryId = input[TmaInitDataKeys.QueryId] ?? string.Empty,
 			TmaInitDataUser = string.IsNullOrWhiteSpace(input[TmaInitDataKeys.User])
 				? null
-				: JsonSerializer.Deserialize<TmaInitDataUser>(input[TmaInitDataKeys.User]),
+				: JsonSerializer.Deserialize<TmaInitDataUser>(input[TmaInitDataKeys.User] ?? string.Empty),
 			TmaInitDataReceiver = string.IsNullOrWhiteSpace(input[TmaInitDataKeys.Receiver])
 				? null
-				: JsonSerializer.Deserialize<TmaInitDataUser>(input[TmaInitDataKeys.Receiver]),
+				: JsonSerializer.Deserialize<TmaInitDataUser>(input[TmaInitDataKeys.Receiver] ?? string.Empty),
 			Chat = string.IsNullOrWhiteSpace(input[TmaInitDataKeys.Chat])
 				? null
-				: JsonSerializer.Deserialize<TmaInitDataChat>(input[TmaInitDataKeys.Chat]),
+				: JsonSerializer.Deserialize<TmaInitDataChat>(input[TmaInitDataKeys.Chat] ?? string.Empty),
 			ChatType = input[TmaInitDataKeys.ChatType] ?? string.Empty,
 			ChatInstance = input[TmaInitDataKeys.ChatInstance] ?? string.Empty,
 			StartParam = input[TmaInitDataKeys.StartParam] ?? string.Empty,
 			CanSendAfter = string.IsNullOrWhiteSpace(input[TmaInitDataKeys.CanSendAfter])
 				? null
-				: DateTimeOffset.FromUnixTimeSeconds(long.Parse(input[TmaInitDataKeys.CanSendAfter])),
+				: DateTimeOffset.FromUnixTimeSeconds(long.Parse(input[TmaInitDataKeys.CanSendAfter] ?? string.Empty)),
 			AuthDate = string.IsNullOrWhiteSpace(input[TmaInitDataKeys.AuthDate])
 				? null
-				: DateTimeOffset.FromUnixTimeSeconds(long.Parse(input[TmaInitDataKeys.AuthDate])),
+				: DateTimeOffset.FromUnixTimeSeconds(long.Parse(input[TmaInitDataKeys.AuthDate] ?? string.Empty)),
 			Hash = input["hash"] ?? string.Empty,
+			Signature = input["signature"] ?? string.Empty,
 		};
 	}
 }

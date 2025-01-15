@@ -56,6 +56,11 @@ public class TmaInitData
 	/// A hash of all passed parameters.
 	/// </summary>
 	public string Hash { get; init; } = string.Empty;
+	
+	/// <summary>
+	/// A signature of all passed parameters (except hash), which the third party can use to check their validity.
+	/// </summary>
+	public string Signature { get; init; } = string.Empty;
 }
 
 public class TmaInitDataUser
