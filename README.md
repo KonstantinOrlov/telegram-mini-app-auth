@@ -1,3 +1,4 @@
+![Logo](./tma.png)
 ## Telegram Mini App Auth
 
 [Telegram Mini Apps Official Documentation](https://core.telegram.org/bots/webapps#validating-data-received-via-the-mini-app)
@@ -90,3 +91,15 @@ example:
 
 - **Telegram.MiniApp.Authentication** - Nuget package
 - **tests/TestWebApi** - .NET Web Api app for auth testing
+
+
+## Authors
+By [Konstantin Orlov](https://github.com/KonstantinOrlov) with [Kutumov Nikita](https://github.com/noncommunicado) support.
+
+Address for `TON` donations, we **appreciate** any "thanks" :)
+
+`UQD0zFgp0p-eFnbL4cPA6DYqoeWzGbCA81KuU6BKwdFmf8jv`
+
+Connect in Telegram
+
+2025
