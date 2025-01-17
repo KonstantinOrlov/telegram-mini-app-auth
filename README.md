@@ -1,7 +1,8 @@
-![Logo](./tma.png)
-## Telegram Mini App Auth
 
-[Telegram Mini Apps Official Documentation](https://core.telegram.org/bots/webapps#validating-data-received-via-the-mini-app)
+
+## <img src="tma.png" alt="drawing" width="24"/>&nbsp;&nbsp;&nbsp;Telegram Mini App Auth
+
+> [Telegram Mini Apps Official Documentation](https://core.telegram.org/bots/webapps#validating-data-received-via-the-mini-app)
 
 
 ## Install
